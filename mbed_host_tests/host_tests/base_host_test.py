@@ -64,6 +64,14 @@ class BaseHostTestAbstract(object):
         if self.__event_queue:
             self.__event_queue.put(('__reset_dut', value, time()))
 
+    def reset(self):
+        """
+        Reset device under test
+        :return:
+        """
+        if self.__event_queue:
+            self.__event_queue.put(("__soft_reset_dut", "0", time()))
+
     def notify_conn_lost(self, text):
         """! Notify main even loop that there was a DUT-host test connection error
         @param consume If True htrun will process (consume) all remaining events
