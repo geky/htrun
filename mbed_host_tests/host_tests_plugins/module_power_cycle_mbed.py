@@ -21,6 +21,7 @@ import os
 import json
 import time
 import requests
+import sys
 from .host_test_plugins import HostTestPluginBase
 
 
@@ -30,7 +31,7 @@ class HostTestPluginPowerCycleResetMethod(HostTestPluginBase):
     name = 'HostTestPluginPowerCycleResetMethod'
     type = 'ResetMethod'
     stable = True
-    capabilities = ['power_cycle']
+    capabilities = ['chris']
     required_parameters = ['target_id', 'device_info']
 
     def __init__(self):
@@ -56,20 +57,29 @@ class HostTestPluginPowerCycleResetMethod(HostTestPluginBase):
             self.print_plugin_error("Error: This plugin requires mbed target_id")
             return False
 
-        if 'device_info' not in kwargs or type(kwargs['device_info']) is not dict:
-            self.print_plugin_error("Error: This plugin requires dict parameter 'device_info' passed by the caller.")
-            return False
+#        if 'device_info' not in kwargs or type(kwargs['device_info']) is not dict:
+#            self.print_plugin_error("Error: This plugin requires dict parameter 'device_info' passed by the caller.")
+#            return False
+#
+        sys.stdout.write("RESET NOW\n")
+        sys.stdout.write("RESET NOW\n")
+        sys.stdout.write("RESET NOW\n")
+        sys.stdout.write("RESET NOW\n")
+        sys.stdout.write("RESET NOW\n")
+        sys.stdout.flush()
+        time.sleep(5)
+        return True
 
-        result = False
-        if self.check_parameters(capability, *args, **kwargs) is True:
-            if capability in HostTestPluginPowerCycleResetMethod.capabilities:
-                target_id = kwargs['target_id']
-                device_info = kwargs['device_info']
-                ret = self.__get_mbed_tas_rm_addr()
-                if ret:
-                    ip, port = ret
-                    result = self.__hw_reset(ip, port, target_id, device_info)
-        return result
+#        result = False
+#        if self.check_parameters(capability, *args, **kwargs) is True:
+#            if capability in HostTestPluginPowerCycleResetMethod.capabilities:
+#                target_id = kwargs['target_id']
+#                device_info = kwargs['device_info']
+#                ret = self.__get_mbed_tas_rm_addr()
+#                if ret:
+#                    ip, port = ret
+#                    result = self.__hw_reset(ip, port, target_id, device_info)
+#        return result
 
     def __get_mbed_tas_rm_addr(self):
         """
